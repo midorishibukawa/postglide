@@ -1,4 +1,5 @@
 import gleam/dynamic.{type Dynamic}
+import gleam/dynamic/decode.{type DecodeError}
 import gleam/javascript/array.{type Array}
 import gleam/javascript/promise.{type Promise}
 import gleam/list
@@ -33,7 +34,7 @@ pub type Value
 
 pub type QueryError {
   DatabaseError(message: String)
-  DecodeFailed(List(dynamic.DecodeError))
+  DecodeFailed(List(DecodeError))
 }
 
 pub fn default_config() {
@@ -52,7 +53,7 @@ pub fn query(
   query: String,
   connection: Connection,
   arguments: List(Value),
-  expecting decoder: dynamic.Decoder(t),
+  expecting decoder: fn(Dynamic) -> Result(t, List(DecodeError))
 ) -> promise.Promise(Result(Results(t), QueryError)) {
   do_query(connection, query, array.from_list(arguments))
   |> promise.map(fn(db_result) {
