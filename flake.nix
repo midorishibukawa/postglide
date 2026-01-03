@@ -21,7 +21,7 @@
             devShell = mkShell {
                 description = "gleam development environment";
                 nativeBuildInputs = defaultBuildInputs 
-                    ++ (with pkgs; [gleam ]);
+                    ++ (with pkgs; [ gleam ]);
             };
         }
     );
