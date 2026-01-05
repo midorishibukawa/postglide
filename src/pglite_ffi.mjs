@@ -82,13 +82,8 @@ function getDataDir(fs) {
 }
 
 function getExtensionsObject(extensionsString) { 
-  console.log("extensions: ", extensionsString)
   return Object.fromEntries(
       Object.entries(EXTENSIONS)
-        .map(entry => {
-          console.log(entry)
-          return entry
-        })
         .filter(([extensionName, _]) => extensionsString.includes(extensionName))
   );
 }
